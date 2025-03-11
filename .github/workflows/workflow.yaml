@@ -20,3 +20,9 @@ jobs:
           npm install
           npm run build 
           npm run test
+
+      - name: Deploy para GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages  # Branch onde os arquivos serão publicados
+          folder: build      # Pasta onde o build foi gerado
