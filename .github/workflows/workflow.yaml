@@ -1,28 +1,31 @@
-name: Continuos Integration
+name: Deploy to GitHub Pages
 
-on: pull_request
-
-
-
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  continuos-integration:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Using Node.js
+      - name: Checkout do Código
+        uses: actions/checkout@v3
+
+      - name: Setup do Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 16.
-      - name: run install, build and test
+          node-version: 16
+
+      - name: Instalar dependências e build
         run: |
           npm install
-          npm run build 
-          npm run test
+          npm run build
 
       - name: Deploy para GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: gh-pages  # Branch onde os arquivos serão publicados
-          folder: build      # Pasta onde o build foi gerado
+          branch: gh-pages
+          folder: build
+          token: ${{ secrets.GH_PAT }}
